@@ -1,0 +1,16 @@
+Package: mouseHumanGene
+Title: Conversion between Human and Mouse Genes
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "Alexandre", 
+             family = "Gaubil", , 
+             email = "gaubil@uchicago.edu", 
+             role = c("aut", "cre"),
+             comment = c(ORCID = "YOUR-ORCID-ID")),
+      person(""))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
