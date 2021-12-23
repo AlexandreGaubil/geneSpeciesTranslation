@@ -1,31 +1,14 @@
-source('load.R')
-
-#' Convert a Mouse Gene to a Human Gene
+#' Adds a column to the df with the human gene name corresponding to the mouse gene
 #'
-#' This function converts the given mouse gene to the matching human gene. If 
-#' there is no matching mouse gene, then we return NaN.
+#' This function adds a column `HumanSymbol` to the given df containing the
+#' human gene name for the gene present in the column `MouseSymbol`. If no matching gene
+#' is found, it adds a NaN value to the column. Uses a conversion file between mouse
+#' and human gene symbols (parameter `conversion_file`).
 #'
-#' @param gene Name of the mouse gene
-#' @return Name of the human gene, NaN if no match
+#' @param df Dataframe containing the `MouseSymbol` column
+#' @return Dataframe identical to `df`, with an added column called `HumanSymbol`
 #' @export
-mouse_to_human_gene <- function(gene) {
-  genes_df <- import_mouse_human_gene_conversion_list()
-  
-  matches <- genes_df[genes_df$MouseSymbol == gene, ]
-  nmatches <- nrow(matches)
-  
-  # No matching mouse gene was found in the conversion df
-  if ((nmatches <= 0) | is.na(nmatches)) {
-    return(NaN)
-  } 
-  
-  # A single matching gene was found in the conversion df
-  else if ((nmatches == 1) | (length(unique(matches$HumanSymbol)) == 1)) {
-    return(matches$HumanSymbol[1])
-  }
-  
-  # Multiple matching genes were found in the conversion df
-  else {
-    return(matches$HumanSymbol)
-  }
+convert_genes_mouse_to_human <- function(df, conversion_file) {
+  local_df <- convert_genes(df, conversion_file, "MouseSymbol", "HumanSymbol")
+  return(local_df)
 }
