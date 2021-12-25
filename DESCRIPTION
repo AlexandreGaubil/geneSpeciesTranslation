@@ -1,13 +1,19 @@
-Package: mouseHumanGene
-Title: Conversion between Human and Mouse Genes
-Version: 0.0.1
+Package: geneSpeciesTranslation
+Title: Translating gene symbols for different species
+Version: 0.0.2
 Authors@R: 
     c(person(given = "Alexandre", 
              family = "Gaubil", , 
              email = "gaubil@uchicago.edu", 
              role = c("aut", "cre")))
-Description: Automated conversion between mouse and human gene names.
+Description: Automated conversion between different gene symbols for different species.
 License: use_mit_license()
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

@@ -1,0 +1,25 @@
+---
+title: "geneSpeciesTranslation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To download the package from GitHub, run the following:
+```{r}
+devtools::install_github("AlexandreGaubil/geneSpeciesTranslation")
+```
+
+Then, to use the package, use:
+```{r}
+library(mouseHumanGene)
+```
