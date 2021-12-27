@@ -1,6 +1,6 @@
 Package: geneSpeciesTranslation
 Title: Translating gene symbols for different species
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     c(person(given = "Alexandre", 
              family = "Gaubil", , 
