@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 
 To download the package from GitHub, run the following:
 ```{r}
-devtools::install_github("AlexandreGaubil/geneSpeciesTranslation")
+# devtools::install_github("AlexandreGaubil/geneSpeciesTranslation")
 ```
 
 Then, to use the package, use:
 ```{r}
-library(mouseHumanGene)
+# library(geneSpeciesTranslation)
 ```

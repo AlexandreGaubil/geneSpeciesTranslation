@@ -1,3 +1,5 @@
+# FIXME: Fix documentation in this file
+
 #' Adds a column to the df with the human gene name corresponding to the mouse gene
 #'
 #' This function adds a column `HumanSymbol` to the given df containing the
@@ -8,15 +10,24 @@
 #' @param gene Name of the mouse gene
 #' @param conversion_file .csv file containing equivalence b/w human and mouse
 #' genes in two columns (HumanSymbol & MouseSymbol)
-#' @param old_gene_col Name of column containing the old gene name
-#' @param new_gene_col Name of column containing the new gene name
+#' @param old_gene Name of column containing the old gene name
+#' @param new_gene Name of column containing the new gene name
 #' @return Dataframe with a new column containing the new gene names
 #' @export
-convert_genes <- function(df, conversion_file, old_gene_col, new_gene_col) {
-  genes_df <- read.csv(file = conversion_file)
+convert_genes <- function(df, conversion_file, old_gene, new_gene) {
+  conversion_table <- read.csv(file = conversion_file)
 
-  df[new_gene_col] <- apply(df[old_gene_col], 1, function(x) convert_gene(x, genes_df))
-  return(df)
+  if (is.data.frame(df)) {
+    df[new_gene] <- apply(df[old_gene],
+                          1,
+                          function(x) convert_gene(x, conversion_table, old_gene, new_gene))
+    return(df)
+  }
+
+  # The `df` is a list
+  else {
+    return(lapply(df, function(x) convert_gene(x, conversion_table, old_gene, new_gene)))
+  }
 }
 
 #' Convert a mouse gene to a human gene
@@ -25,10 +36,10 @@ convert_genes <- function(df, conversion_file, old_gene_col, new_gene_col) {
 #' there is no matching mouse gene, then we return NaN.
 #'
 #' @param gene Name of the mouse gene
-#' @param genes_df Dataframe containing the conversion between the new and old gene names
+#' @param conversion_table Dataframe containing the conversion between the new and old gene names
 #' @return Name of the human gene, NaN if no match
-convert_gene <- function(gene, genes_df, ogene, ngene) {
-  matches <- genes_df[genes_df$MouseSymbol == gene, ]
+convert_gene <- function(gene, conversion_table, old_gene, new_gene) {
+  matches <- conversion_table[conversion_table[old_gene] == gene, ]
   nmatches <- nrow(matches)
 
   # No matching mouse gene was found in the conversion df
@@ -36,13 +47,15 @@ convert_gene <- function(gene, genes_df, ogene, ngene) {
     return(NaN)
   }
 
+  # FIXME: check the case where entire `matches` df only has NaN rows
+
   # A single matching gene was found in the conversion df
-  else if ((nmatches == 1) | (length(unique(matches$HumanSymbol)) == 1)) {
-    return(matches$HumanSymbol[1])
+  else if ((nmatches == 1) | (length(unique(matches[new_gene, ])) == 1)) {
+    return(unique(matches[[new_gene]]))
   }
 
   # Multiple matching genes were found in the conversion df
   else {
-    return(matches$HumanSymbol)
+    return(unique(matches[[new_gene]]))
   }
 }
